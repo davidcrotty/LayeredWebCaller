@@ -9,6 +9,6 @@ import rx.Observable;
  * Created by David Crotty on 10/03/2015.
  */
 public interface IpifyApi {
-    @GET("http://api.ipify.org?format=json")
+    @GET("/?format=json")
     public Observable<HostModel> getIpAddress();
 }

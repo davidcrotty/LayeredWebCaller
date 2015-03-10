@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by David Crotty on 10/03/2015.
@@ -24,12 +25,14 @@ public class GeoService implements IGeoService {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                                       .setConverter(new GsonConverter(gson)).setEndpoint(BuildConfig.GEOAPI_BASEURL)
+                                      .setLogLevel(RestAdapter.LogLevel.FULL)
                                       .build();
         _geoApi = restAdapter.create(IpifyApi.class);
+        //TODO generic error handler can be set in retrofit itself
     }
 
     @Override
     public Observable<HostModel> getIpAddress() {
-        return null;
+        return _geoApi.getIpAddress().observeOn(AndroidSchedulers.mainThread());
     }
 }
